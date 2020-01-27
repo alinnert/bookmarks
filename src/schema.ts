@@ -4,14 +4,13 @@ export type User = {
   id: ShortId
   username: string
   password: string
-  defaultGroup: string
   groups: ShortId[]
 }
 
 export type Group = {
   id: ShortId
   links: ShortId[]
-  name?: string
+  title: string
   color?: string
 }
 
@@ -20,6 +19,7 @@ export type Link = {
   url: string
   title?: string
   note?: string
+  created: number
 }  
 
 export type DataSchema = {

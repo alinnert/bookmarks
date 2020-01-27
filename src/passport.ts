@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs'
 import * as passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
-import { getUserById, getUserByUsername } from './data/userData'
+import { getFullUserById, getUserByUsername } from './data/userData'
 import { ShortId, User } from './schema'
 
 export function initPassport () {
@@ -10,7 +10,7 @@ export function initPassport () {
   })
 
   passport.deserializeUser((id: ShortId, done) => {
-    const user = getUserById(id)
+    const user = getFullUserById(id)
     done(null, user)
   })
 

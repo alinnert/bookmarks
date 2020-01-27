@@ -1,3 +1,6 @@
+# Application specific
+storage/
+
 # Logs
 logs
 *.log

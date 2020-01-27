@@ -8,12 +8,8 @@ export { router as groupsRouter }
 
 router.get('/', isAuthenticated, (req, res) => {
   const currentUser = (req.user as User)
-  const groupIds = currentUser.groups
-  const groups = getGroupsByIds(groupIds)
-
+  const groups = getGroupsByIds(currentUser.groups)
   res.json(groups)
 })
 
-router.post('/', isAuthenticated, (req, res) => {
-  
-})
+router.post('/', isAuthenticated, (req, res) => {})

@@ -4,6 +4,9 @@ import * as passport from 'passport'
 import * as fileStore from 'session-file-store'
 import { initPassport } from './passport'
 import { routes } from './routes'
+import { setupEnvironment } from './setupEnv'
+
+setupEnvironment()
 
 const port = 8000
 const FileStore = fileStore(session)
