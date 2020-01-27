@@ -11,7 +11,11 @@ export function initPassport () {
 
   passport.deserializeUser((id: ShortId, done) => {
     const user = getFullUserById(id)
-    if (user === undefined) { done('user not found') }
+    if (user === undefined) {
+      // TODO: delete session cookie
+      done('user not found')
+      return
+    }
     done(null, user)
   })
 
