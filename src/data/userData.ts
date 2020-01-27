@@ -4,15 +4,15 @@ import { ShortId, User } from '../schema'
 const safeProps: Array<keyof User> = ['username', 'groups']
 
 export function getFullUserById (id: ShortId): User {
-  return db.get('users').find({ id }).value()
+  return db.data.get('users').find({ id }).value()
 }
 
 export function getUserById (id: ShortId) {
-  return db.get('users').find({ id }).pick(...safeProps).value()
+  return db.data.get('users').find({ id }).pick(...safeProps).value()
 }
 
 export function getUserByUsername (username: string, allProps = false) {
-  const user = db.get('users').find({ username })
+  const user = db.data.get('users').find({ username })
 
   if (allProps) return user.value()
   
