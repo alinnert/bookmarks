@@ -11,6 +11,7 @@ export function initPassport () {
 
   passport.deserializeUser((id: ShortId, done) => {
     const user = getFullUserById(id)
+    if (user === undefined) { done('user not found') }
     done(null, user)
   })
 
