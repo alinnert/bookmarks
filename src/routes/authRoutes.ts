@@ -1,5 +1,5 @@
 import * as express from 'express'
-import passport = require('passport')
+import * as passport from 'passport'
 
 const router = express.Router()
 export { router as authRouter }
