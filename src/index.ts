@@ -1,42 +1,24 @@
-import * as express from 'express'
-import * as session from 'express-session'
-import * as passport from 'passport'
-import * as fileStore from 'session-file-store'
-import { initPassport } from './passport'
-import { routes } from './routes'
+import * as Koa from 'koa'
+import * as koaBody from 'koa-body'
+import * as compress from 'koa-compress'
+import * as session from 'koa-session-minimal'
+import * as SQLite3Store from 'koa-sqlite3-session'
+import { router } from './routes'
 import { setupEnvironment } from './setupEnv'
+import { fetchCurrentUser } from './middleware/fetchCurrentUser'
 
 setupEnvironment()
 
-const port = 8000
-const FileStore = fileStore(session)
+const app = new Koa()
 
-const fileStoreOptions: fileStore.Options = {
-  path: './storage/sessions'
-}
+app.use(compress())
+app.use(koaBody())
+app.use(session({
+  key: 'SID',
+  store: new SQLite3Store('./storage/sessions.db')
+}))
+app.use(fetchCurrentUser)
+app.use(router.routes())
+app.use(router.allowedMethods())
 
-const sessionSettings: session.SessionOptions = {
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: false,
-  store: new FileStore(fileStoreOptions),
-  cookie: {
-    sameSite: 'strict'
-  }
-}
-
-initPassport()
-
-const app = express()
-
-app.use(express.static('public'))
-app.use(express.json())
-app.use(session(sessionSettings))
-app.use(passport.initialize())
-app.use(passport.session())
-
-routes(app)
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port.toString()}`)
-})
+app.listen(8000)

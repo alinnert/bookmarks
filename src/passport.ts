@@ -12,7 +12,6 @@ export function initPassport () {
   passport.deserializeUser((id: ShortId, done) => {
     const user = getFullUserById(id)
     if (user === undefined) {
-      // TODO: delete session cookie
       done('user not found')
       return
     }
@@ -21,7 +20,7 @@ export function initPassport () {
 
   const localStrategy = new LocalStrategy(
     (username, password, done) => {
-      const user = getUserByUsername(username, true)
+      const user = getFullUserById(username)
       if (user === undefined) { return done('user not found') }
 
       const passwordsMatch = bcrypt.compareSync(password, user.password)

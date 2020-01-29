@@ -7,14 +7,18 @@ export function getFullUserById (id: ShortId): User {
   return db.data.get('users').find({ id }).value()
 }
 
-export function getUserById (id: ShortId) {
-  return db.data.get('users').find({ id }).pick(...safeProps).value()
+export function getFullUserByUsername (username: string) {
+  return db.data.get('users').find({ username }).value()
 }
 
-export function getUserByUsername (username: string, allProps = false) {
-  const user = db.data.get('users').find({ username })
+export function getUserById (id: ShortId) {
+  const user = db.data.get('users').find({ id })
+  if (user.value() === undefined) { return null }
+  return user.pick(...safeProps).value()
+}
 
-  if (allProps) return user.value()
-  
+export function getUserByUsername (username: string) {
+  const user = db.data.get('users').find({ username })
+  if (user.value() === undefined) { return null }
   return user.pick(...safeProps).value()
 }

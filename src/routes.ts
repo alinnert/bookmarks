@@ -1,12 +1,17 @@
-import { Express } from 'express'
-import { indexRouter } from './routes/indexRoutes'
-import { authRouter } from './routes/authRoutes'
-import { groupsRouter } from './routes/groupsRoutes'
-import { linksRouter } from './routes/linksRoutes'
+import * as Router from '@koa/router'
+import { indexRouter } from './routes/indexRouter'
+import { authRouter } from './routes/authRouter'
+import { groupsRouter } from './routes/groupsRouter'
 
-export function routes(app: Express) {
-  app.use('/api', indexRouter)
-  app.use('/api/auth', authRouter)
-  app.use('/api/groups', groupsRouter)
-  app.use('/api/links', linksRouter)
+const router = new Router()
+
+function addRouter (base: Router, name: string, subRouter: Router) {
+  base.use(name, subRouter.routes(), subRouter.allowedMethods())
 }
+
+addRouter(router, '/api', indexRouter)
+addRouter(router, '/api/auth', authRouter)
+addRouter(router, '/api/groups', groupsRouter)
+// addRouter(router, '/api/links', linksRouter)
+
+export { router }

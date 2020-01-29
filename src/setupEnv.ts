@@ -3,7 +3,7 @@ import * as fs from 'fs'
 const baseDir = `${__dirname}/..`
 
 const requiredDirectories = [
-  'storage/sessions'
+  'storage'
 ]
 
 const requiredFiles = [
