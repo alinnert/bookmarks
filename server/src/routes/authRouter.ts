@@ -2,9 +2,16 @@ import * as Router from '@koa/router'
 import * as bcrypt from 'bcryptjs'
 import { getFullUserByUsername } from '../data/userData'
 import { User } from '../schema'
+import { isAuthenticated } from '../middleware/isAuthenticated'
 
 const router = new Router()
 export { router as authRouter }
+
+router.get('/info', isAuthenticated, ctx => {
+  ctx.response.body = {
+    username: ctx.user.username
+  }
+})
 
 router.post('/login', ctx => {
   interface body {
@@ -23,7 +30,7 @@ router.post('/login', ctx => {
 
   ctx.sessionHandler.regenerateId()
   ctx.session.userId = safeUser.id
-  ctx.response.body = { status: 'ok' }
+  ctx.response.body = { status: 'ok', user: { username } }
 })
 
 router.post('/logout', ctx => {
