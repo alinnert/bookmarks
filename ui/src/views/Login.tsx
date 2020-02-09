@@ -1,5 +1,6 @@
 import React, { FC, useState, FormEvent } from 'react'
 import { Input } from '../components/Input'
+import { login } from '../modules/auth'
 
 export const Login: FC = () => {
   const [email, setEmail] = useState<string>('')
@@ -15,7 +16,7 @@ export const Login: FC = () => {
       Object.assign(errors, { email: 'Bitte gib eine E-Mail-Adresse ein!' })
     }
 
-    if (password.length < 6) {
+    if (password.length < 3) {
       Object.assign(
         errors, { password: 'Das Passwort muss mind. 6 Zeichen lang sein' })
     }
@@ -24,12 +25,13 @@ export const Login: FC = () => {
       setErrors(errors)
       return
     }
-    console.log(`${email} / ${password}`)
+
+    login(email, password).catch((error) => { console.error(error) })
   }
 
   return (
-    <div className="login-view">
-      <form onSubmit={handleSubmit}>
+    <div className="login-view view">
+      <form className="form" onSubmit={handleSubmit}>
         <Input
           id="email" name="email"
           label="E-Mail"

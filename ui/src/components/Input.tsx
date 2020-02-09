@@ -19,11 +19,11 @@ export const Input: FC<InputProps> = (
   }
 ) => {
   return (
-    <div className="text-input">
-      <div className="text-input__description">
-        <label htmlFor={id} className="text-input__label">{label}</label>
+    <div className="input">
+      <div className="input__description">
+        <label htmlFor={id} className="input__label">{label}</label>
         <If condition={error !== ''}>
-          <span className="text-input__error">{error}</span>
+          <span className="input__error">{error}</span>
         </If>
       </div>
       <input

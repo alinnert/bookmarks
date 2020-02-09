@@ -1,0 +1,27 @@
+.navigation {
+  display: flex;
+  border-bottom: 1px solid silver;
+
+  &__link {
+    font-size: 18px;
+    padding: 5px 10px;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      background: #eeeeee;
+    }
+
+    &:active {
+      background: #dddddd;
+    }
+  }
+
+  &__user {
+    font-size: 18px;
+    margin-left: auto;
+    padding: 5px 10px;
+    font-weight: bold;
+  }
+}

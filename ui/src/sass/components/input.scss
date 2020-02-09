@@ -1,0 +1,17 @@
+.input {
+  padding: 10px 0;
+
+  &__description {
+    display: flex;
+    padding-bottom: 5px;
+  }
+
+  &__label {
+    flex: 0 0 120px;
+    font-weight: bold;
+  }
+
+  &__error {
+    color: indianred;
+  }
+}
