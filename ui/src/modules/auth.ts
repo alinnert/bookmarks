@@ -2,6 +2,7 @@ import { api } from './api'
 import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 
+// #region types
 export type Subscriber = (store: AuthStore) => void
 export type UserLoading = boolean
 
@@ -26,6 +27,7 @@ export interface AuthStore {
   loading: UserLoading
   status: userStatus
 }
+// #endregion types
 
 const paths = {
   login: '/auth/login',
@@ -41,6 +43,7 @@ const store: AuthStore = {
 
 const subscriptions: Subscriber[] = []
 
+// #region functions
 function setStore (newStore: Partial<AuthStore>): void {
   Object.assign(store, newStore)
 
@@ -110,22 +113,23 @@ export async function loadCurrentUser (): Promise<void> {
 
   try {
     const response = await api.get(paths.info)
+
     if (response.data.username !== undefined) {
       const currentUser = response.data as User
       setStore({ loading: false, status: userStatus.ok, currentUser })
       return
     }
-  } finally {
+
+    setStore({ loading: false, currentUser: null, status: userStatus.ok })
+  } catch {
     setStore({ loading: false, currentUser: null, status: userStatus.ok })
   }
 }
 
 export function subscribe (callback: Subscriber): Subscription | undefined {
   if (subscriptions.includes(callback)) { return }
-  const callbackWrapper = (data: AuthStore): void => {
-    console.log('callback with', JSON.stringify(data))
-    callback(data)
-  }
+
+  const callbackWrapper = (data: AuthStore): void => { callback(data) }
 
   subscriptions.push(callbackWrapper)
   callbackWrapper(store)
@@ -136,7 +140,9 @@ export function subscribe (callback: Subscriber): Subscription | undefined {
     }
   }
 }
+// #endregion functions
 
+// #region hooks
 export function useInitAuth (): { init: boolean } {
   // If the app is still initializing
   const [init, setInit] = useState<boolean>(true)
@@ -180,3 +186,4 @@ export function useCurrentUser (): Pick<AuthStore, 'currentUser'> {
 export function useUserStatus (): Pick<AuthStore, 'loading'> {
   return { loading: store.loading }
 }
+// #endregion hooks
