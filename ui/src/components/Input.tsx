@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { If } from './If'
 
 interface InputProps {
   label: string
@@ -22,9 +21,10 @@ export const Input: FC<InputProps> = (
     <div className="input">
       <div className="input__description">
         <label htmlFor={id} className="input__label">{label}</label>
-        <If condition={error !== ''}>
+
+        {error !== '' ? (
           <span className="input__error">{error}</span>
-        </If>
+        ) : null}
       </div>
       <input
         type={type}
