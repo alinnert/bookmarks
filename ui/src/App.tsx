@@ -10,7 +10,9 @@ export const App: FC = () => {
   const { error, ready } = useInit()
 
   const errorContent = <div>Oops! An error occured while loading the app.</div>
+
   const loadingContent = <div>Loading...</div>
+
   const appContent = <>
     <Navigation/>
     <Switch>
@@ -47,12 +49,14 @@ function useAuthRedirects (): void {
   const history = useHistory()
   const { currentUser } = useCurrentUser()
 
-  if (location.pathname === '/login' && currentUser !== null) {
-    history.replace('/')
-    return
-  }
+  useEffect((): void => {
+    if (location.pathname === '/login' && currentUser !== null) {
+      history.replace('/')
+      return
+    }
 
-  if (location.pathname !== '/login' && currentUser === null) {
-    history.replace('/login')
-  }
+    if (location.pathname !== '/login' && currentUser === null) {
+      history.replace('/login')
+    }
+  })
 }
