@@ -1,9 +1,9 @@
 import React, { FC, MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { logout, useCurrentUser } from '../modules/auth'
+import { logout, useAuthStore } from '../stores/authStore'
 
 export const Navigation: FC = () => {
-  const { currentUser } = useCurrentUser()
+  const { currentUser } = useAuthStore()
 
   async function handleLogoutClick (
     event: MouseEvent<HTMLDivElement>

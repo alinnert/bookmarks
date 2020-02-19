@@ -1,6 +1,6 @@
 import React, { FC, useState, FormEvent } from 'react'
 import { Input } from '../components/Input'
-import { login } from '../modules/auth'
+import { login } from '../stores/authStore'
 
 export const Login: FC = () => {
   const [email, setEmail] = useState<string>('')

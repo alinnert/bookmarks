@@ -24,30 +24,31 @@
     ]
   },
   "dependencies": {
+    "@alinnert/tstate": "^1.0.1",
     "axios": "^0.19.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.26",
-    "@types/react": "^16.9.19",
+    "@testing-library/user-event": "^10.0.0",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.4",
+    "@types/react": "^16.9.20",
     "@types/react-dom": "^16.9.5",
     "@types/react-router-dom": "^5.1.3",
-    "@typescript-eslint/eslint-plugin": "^2.19.0",
-    "@typescript-eslint/parser": "^2.19.0",
-    "typescript": "^3.7.5",
-    "react-scripts": "3.3.1",
-    "sass": "^1.25.0",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
     "eslint": "^6.8.0",
-    "eslint-config-standard-with-typescript": "^12.0.1",
+    "eslint-config-standard-with-typescript": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "react-scripts": "^3.4.0",
+    "sass": "^1.25.0",
+    "typescript": "^3.7.5"
   }
 }

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom'
 import { Navigation } from './components/Navigation'
-import { loadCurrentUser, useCurrentUser } from './modules/auth'
+import { loadCurrentUser, useAuthStore } from './stores/authStore'
 import { Home } from './views/Home'
 import { Login } from './views/Login'
 
@@ -47,7 +47,7 @@ function useInit (): { ready: boolean, error: boolean } {
 function useAuthRedirects (ready: boolean): void {
   const location = useLocation()
   const history = useHistory()
-  const { currentUser } = useCurrentUser()
+  const { currentUser } = useAuthStore()
 
   useEffect((): void => {
     if (!ready) { return }
