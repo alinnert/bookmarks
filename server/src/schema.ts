@@ -1,20 +1,20 @@
 export type ShortId = string
 
-export type User = {
+export interface User {
   id: ShortId
   username: string
   password: string
   groups: ShortId[]
 }
 
-export type Group = {
+export interface Group {
   id: ShortId
   links: ShortId[]
   title: string
   color?: string
 }
 
-export type Link = {
+export interface Link {
   id: ShortId
   url: string
   title?: string
@@ -22,7 +22,7 @@ export type Link = {
   created: number
 }  
 
-export type DataSchema = {
+export interface DataSchema {
   users: User[],
   links: Link[],
   groups: Group[]
