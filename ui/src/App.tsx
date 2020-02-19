@@ -1,29 +1,43 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom'
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import { Navigation } from './components/Navigation'
+import { ignore } from './lib/functions'
 import { loadCurrentUser, useAuthStore } from './stores/authStore'
 import { Home } from './views/Home'
 import { Login } from './views/Login'
 
 export const App: FC = () => {
+  const location = useLocation()
+  const { currentUser } = useAuthStore()
   const { error, ready } = useInit()
-  useAuthRedirects(ready)
+  const url = location.pathname
+
+  const mustLogin = (): boolean => url !== '/login' && currentUser === null
+  const mustNotLogin = (): boolean => url === '/login' && currentUser !== null
+
+  function getContent (): JSX.Element {
+    return <>
+      <Navigation/>
+      <Switch>
+        {mustLogin() ? <Redirect from="/" to="/login" /> : null}
+        {mustNotLogin() ? <Redirect from="/login" to="/" exact /> : null}
+        <Route path="/" exact component={Home} />
+        <Route path="/login" exact component={Login} />
+      </Switch>
+    </>
+  }
+
+  function getError (): JSX.Element {
+    return <div>Oops! An error occured while loading the app.</div>
+  }
+
+  function getLoading (): JSX.Element {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="App">
-      {ready ? (
-        <>
-          <Navigation/>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/login" exact component={Login} />
-          </Switch>
-        </>
-      ) : error ? (
-        <div>Oops! An error occured while loading the app.</div>
-      ) : (
-        <div>Loading...</div>
-      )}
+      {ready ? getContent() : error ? getError() : getLoading()}
     </div>
   )
 }
@@ -33,32 +47,15 @@ function useInit (): { ready: boolean, error: boolean } {
   const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
-    loadCurrentUser()
-      .then(() => { setReady(true) })
-      .catch((error) => {
+    (async (): Promise<void> => {
+      try {
+        await loadCurrentUser()
+        setReady(true)
+      } catch {
         setError(true)
-        console.error(error)
-      })
+      }
+    })().catch(ignore)
   }, [])
 
   return { ready, error }
-}
-
-function useAuthRedirects (ready: boolean): void {
-  const location = useLocation()
-  const history = useHistory()
-  const { currentUser } = useAuthStore()
-
-  useEffect((): void => {
-    if (!ready) { return }
-
-    if (location.pathname === '/login' && currentUser !== null) {
-      history.replace('/')
-      return
-    }
-
-    if (location.pathname !== '/login' && currentUser === null) {
-      history.replace('/login')
-    }
-  })
 }
