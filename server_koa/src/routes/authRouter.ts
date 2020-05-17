@@ -28,12 +28,12 @@ router.post('/login', ctx => {
   const passwordsMatch = bcrypt.compareSync(password, safeUser.password)
   ctx.assert(passwordsMatch, 401)
 
-  ctx.sessionHandler.regenerateId()
-  ctx.session.userId = safeUser.id
+  ctx.state.sessionHandler.regenerateId()
+  ctx.state.session.userId = safeUser.id
   ctx.response.body = { status: 'ok', user: { username } }
 })
 
 router.post('/logout', ctx => {
-  ctx.session = {}
+  ctx.state.session = {}
   ctx.response.body = { status: 'ok' }
 })

@@ -5,8 +5,8 @@ const router = new Router()
 export { router as indexRouter }
 
 router.get('/', ctx => {
-  const currentUser = ctx.session !== null
-    ? getFullUserById(ctx.session.userId)
+  const currentUser = ctx.state.session !== null
+    ? getFullUserById(ctx.state.session.userId)
     : undefined
   
   ctx.response.body = {

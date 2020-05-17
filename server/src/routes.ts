@@ -1,17 +1,13 @@
-import * as Router from '@koa/router'
-import { indexRouter } from './routes/indexRouter'
-import { authRouter } from './routes/authRouter'
-import { groupsRouter } from './routes/groupsRouter'
+import * as express from 'express'
+import { handleGetError, handleGetIndex } from './handlers'
+import { handlePostLogin } from './handlers/auth/login'
+import { handlePostLogout } from './handlers/auth/logout'
 
-const router = new Router()
+type SetupRoutes = (app: express.Express) => void
 
-function addRouter (base: Router, name: string, subRouter: Router) {
-  base.use(name, subRouter.routes(), subRouter.allowedMethods())
+export const setupRoutes: SetupRoutes = app => {
+  app.get('/', handleGetIndex)
+  app.get('/error', handleGetError)
+  app.post('/auth/login', handlePostLogin)
+  app.post('/auth/logout', handlePostLogout)
 }
-
-addRouter(router, '/api', indexRouter)
-addRouter(router, '/api/auth', authRouter)
-addRouter(router, '/api/groups', groupsRouter)
-// addRouter(router, '/api/links', linksRouter)
-
-export { router }

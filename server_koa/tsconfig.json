@@ -4,7 +4,6 @@
     "alwaysStrict": true,
     "lib": ["ES2019"],
     "module": "CommonJS",
-    "moduleResolution": "Node",
     "target": "ES2019"
   },
   "include": ["src"]

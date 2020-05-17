@@ -1,8 +1,11 @@
-import { BaseContext, Next } from 'koa'
+import { RequestHandler } from 'express'
+import { getSessionValue } from '../session'
 
-export async function isAuthenticated (
-  ctx: BaseContext, next: Next
-): Promise<void> {
-  if (!ctx.user) { ctx.throw(401) }
-  await next()
+type IsAuthenticated = () => RequestHandler
+
+export const isAuthenticated: IsAuthenticated = () => {
+  return (req, res, next) => {
+    const user = getSessionValue(req, 'user')
+    
+  }
 }
