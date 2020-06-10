@@ -1,6 +1,9 @@
 # Bookmarks
 
-This is a [Node.js](https://nodejs.org) based self-hosted web-based bookmark/favourites/links management application.
+This is a self-hosted bookmark management application.
+
+- The server is written in [Go](https://golang.org) using the framework [Fiber](https://gofiber.io/).
+- The UI is written in [TypeScript](https://typescriptlang.org) using the framework [React](https://reactjs.org).
 
 ## Idea
 
